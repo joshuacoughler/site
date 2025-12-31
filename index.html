@@ -3,376 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joshua Coughler | Computer Engineering Portfolio</title>
+    <title>Joshua Coughler | Engineering Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- CSS VARIABLES & RESET --- */
+        /* --- CSS VARIABLES & THEME --- */
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #ec4899; /* Changed to a 'McGill-ish' Red/Pink accent or keep Blue */
-            --accent-secondary: #6366f1;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --primary: #f43f5e; /* Vibrant Red/Pink */
+            --secondary: #6366f1; /* Electric Blue */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-            scroll-behavior: smooth;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
         }
 
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
-
-        /* --- LAYOUT UTILITIES --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section { padding: 80px 0; }
-
-        /* --- HEADER --- */
-        header {
-            padding: 20px 0;
+        /* --- ANIMATED BACKGROUND --- */
+        .background-animation {
             position: fixed;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid #334155;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(244, 63, 94, 0.15), transparent 25%);
+            animation: pulseBg 10s infinite alternate;
         }
 
+        @keyframes pulseBg {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 100px 0; }
+
+        /* --- NAV --- */
         nav {
+            padding: 20px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--text-primary); }
-        .logo span { color: var(--accent-secondary); }
-
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a:hover { color: var(--accent-secondary); }
-
-        /* --- HERO SECTION --- */
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+        .logo span { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* --- HERO --- */
         .hero {
-            height: 100vh;
+            height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 70%);
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             margin-bottom: 20px;
-            line-height: 1.1;
+            line-height: 1;
         }
 
-        .hero h1 span {
-            background: linear-gradient(to right, var(--accent-secondary), #a855f7);
+        .gradient-text {
+            background: linear-gradient(120deg, var(--secondary), var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-
-        .hero-sub {
-            font-size: 1.1rem; 
-            color: var(--accent-secondary); 
-            margin-bottom: 40px; 
-            font-weight: 600;
-        }
+        .hero p { font-size: 1.5rem; color: var(--text-muted); margin-bottom: 40px; }
 
         .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--accent-secondary);
-            color: #ffffff;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            color: white;
+            border-radius: 50px;
             font-weight: bold;
-            border-radius: 5px;
-            border: 2px solid var(--accent-secondary);
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
         }
 
-        .btn:hover {
-            background: transparent;
-            color: var(--accent-secondary);
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4); }
+
+        /* --- PROJECT CARDS --- */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid #334155;
+            border-radius: 20px;
+            padding: 30px;
+            transition: 0.4s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
-        /* --- ABOUT SECTION --- */
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            text-align: center;
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--secondary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .card h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .card p { color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+        
+        .tech-stack { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
+        .tech { font-size: 0.85rem; color: var(--primary); font-family: monospace; }
+
+        /* --- MODAL (POPUP) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            position: relative;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Header uses the PCB image as a background */
+        .modal-header {
+            height: 250px;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), var(--bg-card)), url('pcb.jpg');
+            background-size: cover;
+            background-position: center;
             position: relative;
         }
-        
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--accent-secondary);
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
 
-        .about-content {
+        .close-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.6); color: white;
+            border: none; font-size: 1.5rem; width: 40px; height: 40px;
+            border-radius: 50%; cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-btn:hover { background: var(--primary); }
+
+        .modal-body { padding: 40px; }
+        .modal-body h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        .modal-body h4 { color: var(--primary); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .spec-item strong { color: var(--secondary); display: block; margin-bottom: 5px; }
+
+        /* --- MODAL IMAGE GALLERY --- */
+        .image-gallery {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: start;
-        }
-
-        .about-text p { margin-bottom: 20px; color: var(--text-secondary); }
-
-        /* --- SKILLS --- */
-        .skills-wrapper h3 { margin-bottom: 20px; color: var(--text-primary); }
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .skill-tag {
-            background-color: var(--card-bg);
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: 1px solid #334155;
-            color: var(--accent-secondary);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* --- EXPERIENCE/PROJECTS --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid #334155;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-card:hover { 
-            transform: translateY(-5px); 
-            border-color: var(--accent-secondary); 
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .project-card h3 { font-size: 1.4rem; }
-        .project-role { font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block;}
-
-        .project-card ul {
-            list-style: disc;
-            margin-left: 20px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-        
-        .project-card ul li { margin-bottom: 8px; }
-
-        .project-tech { 
-            margin-top: auto;
-            font-size: 0.85rem; 
-            color: var(--accent-secondary); 
-            font-family: monospace; 
-            padding-top: 15px;
-            border-top: 1px solid #334155;
-        }
-
-        /* --- CONTACT --- */
-        .contact-box {
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: 12px;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-            border: 1px solid #334155;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
             gap: 20px;
             margin-top: 30px;
         }
-
-        .social-links a {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
+        .gallery-item img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item img:hover { transform: scale(1.03); border-color: var(--secondary); }
+        .gallery-caption { font-size: 0.85rem; color: var(--text-muted); text-align: center; }
 
-        .social-links a:hover { color: var(--accent-secondary); }
-
-        /* --- MOBILE RESPONSIVE --- */
+        /* Mobile Fix for Gallery */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .about-content { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+            .image-gallery { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
         }
+
+        /* --- CONTACT --- */
+        .contact { text-align: center; }
+        .socials { margin-top: 20px; font-size: 2rem; }
+        .socials a { margin: 0 15px; color: var(--text-muted); transition: 0.3s; }
+        .socials a:hover { color: var(--primary); }
+
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">Joshua<span>.Coughler</span></a>
-                <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#projects">Engineering</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="background-animation"></div>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Hi, I'm <span>Joshua</span></h1>
-            <p>Computer Engineering Student @ McGill University</p>
-            <p class="hero-sub">Specializing in Embedded Systems, PCB Design & AI</p>
-            <a href="#projects" class="btn">View My Engineering Projects</a>
-        </div>
-    </section>
+    <div class="container">
+        <nav>
+            <div class="logo">Joshua<span>.Coughler</span></div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">McGill University '28</div>
+        </nav>
 
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>
-                        I am a <strong>Bachelor of Engineering</strong> student at McGill University (Class of 2028), majoring in Computer Engineering with a Minor in Artificial Intelligence. I currently hold a <strong>3.78 GPA</strong>.
-                    </p>
-                    <p>
-                        My work focuses on the intersection of hardware and software. From designing custom PCBs for Mars rovers to writing firmware for aerial telemetry, I love building systems where code interacts with the physical world.
-                    </p>
-                    <p>
-                        Beyond engineering, my time volunteering with <em>Youths For Hospice</em> has strengthened my commitment to designing technology that prioritizes accessibility and human needs.
-                    </p>
-                </div>
-                
-                <div class="skills-wrapper">
-                    <h3>Technical Toolkit</h3>
-                    <div class="skills-grid">
-                        <span class="skill-tag">Java & Python</span>
-                        <span class="skill-tag">C / Firmware</span>
-                        <span class="skill-tag">Altium Designer</span>
-                        <span class="skill-tag">STM32CubeIDE</span>
-                        <span class="skill-tag">VHDL & Quartus</span>
-                        <span class="skill-tag">PCB Design</span>
-                        <span class="skill-tag">KiCad</span>
-                        <span class="skill-tag">MATLAB</span>
-                    </div>
-                </div>
+        <section class="hero">
+            <div>
+                <h1>Building the <br><span class="gradient-text">Future of Hardware</span></h1>
+                <p>Computer Engineering & AI Student specializing in Embedded Systems.</p>
+                <a href="#work" class="btn">See My Projects</a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Engineering Projects</h2>
-            <div class="projects-grid">
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Integrated Motor Controller</h3>
-                        <i class="fas fa-robot" style="color: var(--text-secondary);"></i>
+        <section id="work">
+            <h2 style="font-size: 2.5rem; margin-bottom: 50px;">Featured Engineering</h2>
+            <div class="project-grid">
+
+                <div class="card" onclick="openModal()">
+                    <div class="card-tag">Interactive • Click Me</div>
+                    <h3>Integrated Motor Controller</h3>
+                    <p>
+                        Consolidated four motor-control PCBs into a single 3-channel 24V controller for the Rover's wrist pitch, roll, and grip. Designed to optimize space and reliability.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech">Altium Designer</span>
+                        <span class="tech">STM32</span>
+                        <span class="tech">C / Firmware</span>
                     </div>
-                    <span class="project-role">McGill Robotics Team | Electrical Division</span>
-                    <ul>
-                        <li>Consolidated four motor-control PCBs into a single 3-channel 24V controller (wrist pitch/roll/grip).</li>
-                        <li>Designed schematics for DFMA, standardizing connectors and isolating HV/LV domains.</li>
-                        <li>Developed STM32 firmware for multi-motor control with encoder feedback and safety interlocks.</li>
-                    </ul>
-                    <div class="project-tech">Altium Designer • STM32 • C • Hardware</div>
+                    <div style="margin-top: 20px; font-weight: bold; color: var(--secondary);">
+                        View Board Schematics & Details <i class="fas fa-arrow-right"></i>
+                    </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Mission Planner Telemetry Plugin</h3>
-                        <i class="fas fa-plane" style="color: var(--text-secondary);"></i>
+                <div class="card">
+                    <div class="card-tag">Avionics</div>
+                    <h3>Mission Planner Telemetry Plugin</h3>
+                    <p>
+                        Developed a real-time plugin to translate raw MAVLink telemetry (RSSI, packet loss) into clear status indicators, ensuring safe flight operations for non-avionics operators.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech">Python</span>
+                        <span class="tech">MAVLink</span>
+                        <span class="tech">Mission Planner</span>
                     </div>
-                    <span class="project-role">Aerial Design Team | Avionics Division</span>
-                    <ul>
-                        <li>Developed a plugin to translate raw telemetry (RSSI, packet loss) into clear status indicators.</li>
-                        <li>Implemented threshold-based warnings to notify operators of unsafe connection quality.</li>
-                        <li>Validated plugin accuracy using simulated flight data and MAVLink streams.</li>
-                    </ul>
-                    <div class="project-tech">Python • Mission Planner • MAVLink • VS Code</div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Custom Heap Data Structure</h3>
-                        <i class="fas fa-code" style="color: var(--text-secondary);"></i>
-                    </div>
-                    <span class="project-role">Academic Project | Computer Science</span>
-                    <ul>
-                        <li>Implemented a Priority Queue using a binary heap with 1-based indexing for arithmetic optimization.</li>
-                        <li>Engineered custom comparators to handle polymorphic data types efficiently.</li>
-                        <li>Rigorous testing of edge cases in memory management and sorting efficiency.</li>
-                    </ul>
-                    <div class="project-tech">Java • Data Structures • JUnit</div>
                 </div>
 
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact">
-        <div class="container">
-            <div class="contact-box">
-                <h2 style="margin-bottom: 20px;">Let's Connect</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 30px;">
-                    I am based in Montréal and open to opportunities in Embedded Systems, Firmware Engineering, or Hardware Design.
+        <section class="contact">
+            <h2>Let's Build Something.</h2>
+            <p>Open for Internships in Firmware & Hardware Design.</p>
+            <div class="socials">
+                <a href="https://linkedin.com/in/joshuacoughler"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/joshuacoughler"><i class="fab fa-github"></i></a>
+                <a href="mailto:joshua.coughler@mail.mcgill.ca"><i class="fas fa-envelope"></i></a>
+            </div>
+        </section>
+    </div>
+
+    <div id="roboticsModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="document.getElementById('roboticsModal').style.display='none'">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2>Integrated Motor Controller</h2>
+                <h4>McGill Robotics Team • 2025/2026</h4>
+                
+                <p>
+                    This board replaces three individual steering boards with a single consolidated PCB. It interfaces with the CAN bus to control three independent motors (Pitch, Roll, and Gripper) via an STM32 microcontroller.
                 </p>
-                <a href="mailto:joshua.coughler@mail.mcgill.ca" class="btn">joshua.coughler@mail.mcgill.ca</a>
-                
-                <div class="social-links">
-                    <a href="https://linkedin.com/in/joshuacoughler" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/joshuacoughler" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <strong>MCU</strong>
+                        STM32G474RET3
+                    </div>
+                    <div class="spec-item">
+                        <strong>Motor Drivers</strong>
+                        3x DRV8874PWPR
+                    </div>
+                    <div class="spec-item">
+                        <strong>Power Input</strong>
+                        24V (Main) / 5V USB (Backup)
+                    </div>
+                    <div class="spec-item">
+                        <strong>Communication</strong>
+                        CAN Bus (MCP2561FD Transceiver)
+                    </div>
+                </div>
+
+                <h3>Technical Implementation</h3>
+                <ul style="margin-left: 20px; color: var(--text-muted); margin-top: 15px; line-height: 1.8;">
+                    <li><strong>Power Architecture:</strong> Input 24V is stepped down via a Buck Converter (AOZ1280CI) to 5V, then to 3.3V via LDO.</li>
+                    <li><strong>USB Backup Logic:</strong> The board can sustain low-voltage logic (MCU, Comms) via USB power even if the main 24V battery fails.</li>
+                    <li><strong>Signal Integrity:</strong> Includes Level Shifters (TXS0104EDR) to bridge 5V CAN signals to 3.3V logic.</li>
+                </ul>
+
+                <div class="image-gallery">
+                    <div class="gallery-item">
+                        <img src="schematic.jpg" alt="Altium Schematic">
+                        <div class="gallery-caption">Full System Schematic (Altium Designer)</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="pcb.jpg" alt="Routed PCB Layout">
+                        <div class="gallery-caption">Routed PCB Layout (Altium Designer)</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <footer style="text-align: center; padding: 20px; border-top: 1px solid #334155; color: var(--text-secondary); background-color: var(--bg-color);">
-        <p>&copy; 2025 Joshua Coughler.</p>
-    </footer>
+    <script>
+        function openModal() {
+            document.getElementById('roboticsModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+        }
+
+        function closeModal(event) {
+            // Close if clicking the background overlay or the X button
+            if (event.target.id === 'roboticsModal') {
+                document.getElementById('roboticsModal').style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }
+        }
+    </script>
 
 </body>
 </html>
