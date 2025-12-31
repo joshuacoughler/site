@@ -6,270 +6,212 @@
     <title>Joshua Coughler | Engineering Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- CSS VARIABLES & THEME --- */
+        /* --- THEME & VARIABLES --- */
         :root {
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --primary: #f43f5e; /* Vibrant Red/Pink */
-            --secondary: #6366f1; /* Electric Blue */
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-dark: #0f172a;     /* Deep professional slate */
+            --bg-card: #1e293b;     /* Lighter slate for cards */
+            --accent: #38bdf8;      /* Professional Steel/Sky Blue */
+            --text-main: #f1f5f9;   /* Near white */
+            --text-muted: #94a3b8;  /* Muted gray */
+            --font-header: 'Courier New', Courier, monospace; /* Typewriter style */
+            --font-body: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Readable body */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: var(--font-body);
             background-color: var(--bg-dark);
             color: var(--text-main);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* --- ANIMATED BACKGROUND --- */
-        .background-animation {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+        h1, h2, h3, h4, .logo, .tech, .card-tag, .btn {
+            font-family: var(--font-header);
+        }
+
+        /* --- SUBTLE BACKGROUND TEXTURE --- */
+        .bg-texture {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.95)), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2338bdf8' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             z-index: -1;
-            background: radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15), transparent 25%),
-                        radial-gradient(circle at 85% 30%, rgba(244, 63, 94, 0.15), transparent 25%);
-            animation: pulseBg 10s infinite alternate;
-        }
-
-        @keyframes pulseBg {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.1); opacity: 1; }
         }
 
         /* --- LAYOUT --- */
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         section { padding: 100px 0; }
 
+        /* --- TYPEWRITER ANIMATION CSS --- */
+        .typewriter-target {
+            display: inline-block;
+            overflow: hidden; /* Ensures the content is not revealed until the animation */
+            border-right: .15em solid var(--accent); /* The typwriter cursor */
+            white-space: nowrap; /* Keeps the content on a single line */
+            margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+            width: 0; /* Start with 0 width */
+            opacity: 0; /* Start hidden */
+        }
+
+        /* The animation class added by JS */
+        .typing-active {
+            opacity: 1;
+            animation: 
+                typing 2.5s steps(30, end) forwards,
+                blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent); } }
+
+
         /* --- NAV --- */
         nav {
             padding: 20px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #1e293b;
         }
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
-        .logo span { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo { font-size: 1.3rem; font-weight: bold; color: var(--accent); letter-spacing: -1px; }
         
         /* --- HERO --- */
         .hero {
-            height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center;
         }
-
-        .hero h1 {
-            font-size: 4.5rem;
-            margin-bottom: 20px;
-            line-height: 1;
-        }
-
-        .gradient-text {
-            background: linear-gradient(120deg, var(--secondary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p { font-size: 1.5rem; color: var(--text-muted); margin-bottom: 40px; }
-
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; color: var(--text-main); }
+        .accent-text { color: var(--accent); }
+        .hero p { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;}
         .btn {
-            padding: 15px 40px;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            color: white;
-            border-radius: 50px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: inline-block;
+            padding: 12px 35px; background: transparent; color: var(--accent);
+            border: 2px solid var(--accent); border-radius: 4px; font-weight: bold; font-size: 0.9rem;
+            text-decoration: none; transition: 0.3s; letter-spacing: 1px;
         }
-
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4); }
+        .btn:hover { background: var(--accent); color: var(--bg-dark); }
 
         /* --- PROJECT CARDS --- */
+        .section-header { font-size: 2rem; margin-bottom: 50px; border-left: 5px solid var(--accent); padding-left: 20px; }
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
 
         .card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid #334155;
-            border-radius: 20px;
-            padding: 30px;
-            transition: 0.4s;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
+            background: var(--bg-card); border: 1px solid #334155; border-radius: 8px;
+            padding: 30px; transition: 0.3s; cursor: pointer; position: relative;
+            display: flex; flex-direction: column;
         }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--secondary);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        /* Fixed Clipping Issue: Moved tag relative positioning */
+        .card-header-group {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;
         }
-
+        .card h3 { font-size: 1.5rem; max-width: 70%; }
         .card-tag {
-            position: absolute;
-            top: 20px; right: 20px;
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--secondary);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            background: rgba(56, 189, 248, 0.1); color: var(--accent);
+            padding: 5px 10px; border-radius: 4px; font-size: 0.7rem;
+            white-space: nowrap; border: 1px solid var(--accent);
         }
 
-        .card h3 { font-size: 1.8rem; margin-bottom: 15px; }
-        .card p { color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
-        
+        .card p { color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem; }
         .tech-stack { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
-        .tech { font-size: 0.85rem; color: var(--primary); font-family: monospace; }
+        .tech { font-size: 0.8rem; color: var(--accent); border-bottom: 1px dotted var(--accent); }
 
         /* --- MODAL (POPUP) --- */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-            display: none; /* Hidden by default */
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9); z-index: 2000;
+            display: none; justify-content: center; align-items: start;
+            padding: 40px 20px; overflow-y: auto;
         }
-
         .modal-content {
-            background: var(--bg-card);
-            width: 100%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 20px;
-            border: 1px solid var(--primary);
-            position: relative;
-            animation: slideUp 0.4s ease-out;
+            background: var(--bg-dark); width: 100%; max-width: 950px;
+            border-radius: 8px; border: 1px solid var(--accent);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        /* Header uses the PCB image as a background */
-        .modal-header {
-            height: 250px;
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), var(--bg-card)), url('pcb.jpg');
-            background-size: cover;
-            background-position: center;
+        /* Header uses the PCB image as a background - ENSURE pcb.jpg EXISTS */
+        .modal-header-img {
+            height: 250px; width: 100%;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.2), var(--bg-dark)), url('pcb.jpg');
+            background-size: cover; background-position: center;
+            border-bottom: 2px solid var(--accent);
             position: relative;
         }
-
         .close-btn {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(0,0,0,0.6); color: white;
-            border: none; font-size: 1.5rem; width: 40px; height: 40px;
-            border-radius: 50%; cursor: pointer;
-            transition: 0.3s;
+            position: absolute; top: 15px; right: 15px; color: var(--text-main);
+            background: var(--bg-card); border: 1px solid var(--accent);
+            font-size: 1.2rem; width: 35px; height: 35px; border-radius: 50%; cursor: pointer;
         }
-        .close-btn:hover { background: var(--primary); }
-
         .modal-body { padding: 40px; }
-        .modal-body h2 { font-size: 2.5rem; margin-bottom: 10px; }
-        .modal-body h4 { color: var(--primary); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
-        
         .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-            background: rgba(0,0,0,0.2);
-            padding: 20px;
-            border-radius: 10px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px; margin: 30px 0; padding: 20px; background: var(--bg-card); border-radius: 5px;
         }
-        .spec-item strong { color: var(--secondary); display: block; margin-bottom: 5px; }
+        .spec-item strong { color: var(--accent); display: block; font-family: var(--font-header); font-size: 0.9rem; }
 
         /* --- MODAL IMAGE GALLERY --- */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .gallery-item {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .image-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 40px; }
         .gallery-item img {
-            width: 100%;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            transition: transform 0.3s ease;
+            width: 100%; border-radius: 5px; border: 2px solid #334155; transition: 0.3s;
         }
-        .gallery-item img:hover { transform: scale(1.03); border-color: var(--secondary); }
-        .gallery-caption { font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+        .gallery-item img:hover { border-color: var(--accent); transform: scale(1.02); }
+        .gallery-caption { font-family: var(--font-header); font-size: 0.8rem; color: var(--accent); margin-top: 10px; text-align: center;}
 
-        /* Mobile Fix for Gallery */
         @media (max-width: 768px) {
             .image-gallery { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 3rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .card-header-group { flex-direction: column; gap: 10px; }
+            .card h3 { max-width: 100%; }
         }
-
-        /* --- CONTACT --- */
-        .contact { text-align: center; }
-        .socials { margin-top: 20px; font-size: 2rem; }
-        .socials a { margin: 0 15px; color: var(--text-muted); transition: 0.3s; }
-        .socials a:hover { color: var(--primary); }
-
     </style>
 </head>
 <body>
 
-    <div class="background-animation"></div>
+    <div class="bg-texture"></div>
 
     <div class="container">
         <nav>
-            <div class="logo">Joshua<span>.Coughler</span></div>
-            <div style="color: var(--text-muted); font-size: 0.9rem;">McGill University '28</div>
+            <div class="logo">> Joshua.Coughler_</div>
+            <div style="color: var(--text-muted); font-family: var(--font-header); font-size: 0.8rem;">McGill Eng '28</div>
         </nav>
 
         <section class="hero">
             <div>
-                <h1>Building the <br><span class="gradient-text">Future of Hardware</span></h1>
-                <p>Computer Engineering & AI Student specializing in Embedded Systems.</p>
-                <a href="#work" class="btn">See My Projects</a>
+                <h1>Exploring the Intersection of <br><span class="accent-text typewriter-target">Hardware & Software_</span></h1>
+                <p>Computer Engineering & AI Student focusing on Embedded Systems and Firmware.</p>
+                <a href="#work" class="btn">VIEW PROJECTS</a>
             </div>
         </section>
 
         <section id="work">
-            <h2 style="font-size: 2.5rem; margin-bottom: 50px;">Featured Engineering</h2>
+            <h2 class="section-header"><span class="typewriter-target">Featured Engineering_</span></h2>
+            
             <div class="project-grid">
 
                 <div class="card" onclick="openModal()">
-                    <div class="card-tag">Interactive • Click Me</div>
-                    <h3>Integrated Motor Controller</h3>
+                    <div class="card-header-group">
+                        <h3>Integrated Motor Controller PCB</h3>
+                        <div class="card-tag">Interactive • Click Me</div>
+                    </div>
                     <p>
-                        Consolidated four motor-control PCBs into a single 3-channel 24V controller for the Rover's wrist pitch, roll, and grip. Designed to optimize space and reliability.
+                        Consolidated four individual motor-control boards into a single 3-channel 24V controller for the Rover's wrist pitch, roll, and grip. Designed for DFMA and reliability.
                     </p>
                     <div class="tech-stack">
                         <span class="tech">Altium Designer</span>
-                        <span class="tech">STM32</span>
-                        <span class="tech">C / Firmware</span>
+                        <span class="tech">STM32CubeIDE</span>
                     </div>
-                    <div style="margin-top: 20px; font-weight: bold; color: var(--secondary);">
-                        View Board Schematics & Details <i class="fas fa-arrow-right"></i>
+                    <div style="margin-top: 20px; font-weight: bold; color: var(--accent); font-family: var(--font-header); font-size: 0.9rem;">
+                        [ VIEW SCHEMATICS & DETAILS ]
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-tag">Avionics</div>
-                    <h3>Mission Planner Telemetry Plugin</h3>
+                    <div class="card-header-group">
+                        <h3>Telemetry Status Plugin</h3>
+                        <div class="card-tag">Avionics Software</div>
+                    </div>
                     <p>
-                        Developed a real-time plugin to translate raw MAVLink telemetry (RSSI, packet loss) into clear status indicators, ensuring safe flight operations for non-avionics operators.
+                        Developed a real-time Mission Planner plugin to translate raw MAVLink telemetry (RSSI, packet loss) into clear, threshold-based status indicators for flight operators.
                     </p>
                     <div class="tech-stack">
-                        <span class="tech">Python</span>
-                        <span class="tech">MAVLink</span>
+                         <span class="tech">Visual Studio Code</span>
                         <span class="tech">Mission Planner</span>
                     </div>
                 </div>
@@ -277,64 +219,52 @@
             </div>
         </section>
 
-        <section class="contact">
-            <h2>Let's Build Something.</h2>
-            <p>Open for Internships in Firmware & Hardware Design.</p>
-            <div class="socials">
-                <a href="https://linkedin.com/in/joshuacoughler"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/joshuacoughler"><i class="fab fa-github"></i></a>
-                <a href="mailto:joshua.coughler@mail.mcgill.ca"><i class="fas fa-envelope"></i></a>
+        <section class="contact" style="text-align: center;">
+            <h2 class="section-header" style="border: none; padding:0;"><span class="typewriter-target">Initialize Connection_</span></h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px;">Open for Internships in Firmware & Hardware Design.</p>
+            <div style="font-size: 2rem;">
+                <a href="https://linkedin.com/in/joshuacoughler" style="color: var(--text-muted); margin: 0 15px;"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/joshuacoughler" style="color: var(--text-muted); margin: 0 15px;"><i class="fab fa-github"></i></a>
+                <a href="mailto:joshua.coughler@mail.mcgill.ca" style="color: var(--text-muted); margin: 0 15px;"><i class="fas fa-envelope"></i></a>
             </div>
         </section>
     </div>
 
     <div id="roboticsModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <div class="modal-header">
-                <button class="close-btn" onclick="document.getElementById('roboticsModal').style.display='none'">&times;</button>
+            <div class="modal-header-img">
+                <button class="close-btn" onclick="document.getElementById('roboticsModal').style.display='none'">X</button>
             </div>
             <div class="modal-body">
-                <h2>Integrated Motor Controller</h2>
-                <h4>McGill Robotics Team • 2025/2026</h4>
+                <h2 style="font-size: 2rem; margin-bottom: 5px;">Integrated Motor Controller</h2>
+                <h4 style="color: var(--accent); margin-bottom: 20px;">McGill Robotics Team • Electrical Division</h4>
                 
-                <p>
+                <p style="color: var(--text-muted);">
                     This board replaces three individual steering boards with a single consolidated PCB. It interfaces with the CAN bus to control three independent motors (Pitch, Roll, and Gripper) via an STM32 microcontroller.
                 </p>
 
                 <div class="specs-grid">
-                    <div class="spec-item">
-                        <strong>MCU</strong>
-                        STM32G474RET3
-                    </div>
-                    <div class="spec-item">
-                        <strong>Motor Drivers</strong>
-                        3x DRV8874PWPR
-                    </div>
-                    <div class="spec-item">
-                        <strong>Power Input</strong>
-                        24V (Main) / 5V USB (Backup)
-                    </div>
-                    <div class="spec-item">
-                        <strong>Communication</strong>
-                        CAN Bus (MCP2561FD Transceiver)
-                    </div>
+                    <div class="spec-item"><strong>MCU</strong>STM32G474RET3</div>
+                    <div class="spec-item"><strong>Drivers</strong>3x DRV8874PWPR</div>
+                    <div class="spec-item"><strong>Input</strong>24V (Main) / 5V USB</div>
+                    <div class="spec-item"><strong>Comms</strong>CAN Bus (MCP2561FD)</div>
                 </div>
 
-                <h3>Technical Implementation</h3>
-                <ul style="margin-left: 20px; color: var(--text-muted); margin-top: 15px; line-height: 1.8;">
-                    <li><strong>Power Architecture:</strong> Input 24V is stepped down via a Buck Converter (AOZ1280CI) to 5V, then to 3.3V via LDO.</li>
-                    <li><strong>USB Backup Logic:</strong> The board can sustain low-voltage logic (MCU, Comms) via USB power even if the main 24V battery fails.</li>
-                    <li><strong>Signal Integrity:</strong> Includes Level Shifters (TXS0104EDR) to bridge 5V CAN signals to 3.3V logic.</li>
+                <h3 style="border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 15px;">Technical Implementation ></h3>
+                <ul style="margin-left: 20px; color: var(--text-muted); line-height: 1.8;">
+                    <li><strong>Power Architecture:</strong> 24V input stepped down via Buck Converter (AOZ1280CI) to 5V, then LDO to 3.3V logic.</li>
+                    <li><strong>USB Backup Logic:</strong> Isolates low-voltage logic (MCU, Comms) allowing debugging via USB power even if main 24V fails.</li>
+                    <li><strong>Signal Integrity:</strong> Utilizes Level Shifters (TXS0104EDR) to bridge 5V CAN signals to 3.3V MCU logic.</li>
                 </ul>
 
                 <div class="image-gallery">
                     <div class="gallery-item">
-                        <img src="schematic.jpg" alt="Altium Schematic">
-                        <div class="gallery-caption">Full System Schematic (Altium Designer)</div>
+                        <img src="schematic.jpg" alt="Altium Schematic showing power and MCU connections">
+                        <div class="gallery-caption">Figure 1: Full System Schematic (Altium)</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="pcb.jpg" alt="Routed PCB Layout">
-                        <div class="gallery-caption">Routed PCB Layout (Altium Designer)</div>
+                         <img src="pcb.jpg" alt="Routed PCB Layout showing 3 motor drivers">
+                        <div class="gallery-caption">Figure 2: Routed PCB Layout (Altium)</div>
                     </div>
                 </div>
             </div>
@@ -342,18 +272,36 @@
     </div>
 
     <script>
+        // --- MODAL CONTROLS ---
         function openModal() {
             document.getElementById('roboticsModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Stop background scrolling
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal(event) {
-            // Close if clicking the background overlay or the X button
             if (event.target.id === 'roboticsModal') {
                 document.getElementById('roboticsModal').style.display = 'none';
-                document.body.style.overflow = 'auto'; // Restore scrolling
+                document.body.style.overflow = 'auto'; 
             }
         }
+
+        // --- TYPEWRITER ON SCROLL OBSERVER ---
+        // This watches for elements with '.typewriter-target' entering the screen
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add the class that starts the animation
+                    entry.target.classList.add('typing-active');
+                    // Optional: Stop watching after it animates once
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 }); // Trigger when 50% visible
+
+        // Start observing all targets
+        document.querySelectorAll('.typewriter-target').forEach(target => {
+            observer.observe(target);
+        });
     </script>
 
 </body>
