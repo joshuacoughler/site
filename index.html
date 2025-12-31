@@ -8,11 +8,10 @@
     <style>
         /* --- PAPER THEME VARIABLES --- */
         :root {
-            --desk-color: #2c2c2c;    /* Dark desk background */
-            --paper-color: #ffffff;   /* Bright white paper */
-            --ink-color: #111111;     /* Black typewriter ink */
-            --accent-blue: #0000EE;   /* Standard link blue (looks like pen ink) */
-            --highlight: #ffffcc;     /* Subtle highlighter yellow */
+            --desk-color: #2c2c2c;
+            --paper-color: #ffffff;
+            --ink-color: #111111;
+            --accent-blue: #0000EE;
             --font-type: 'Courier New', Courier, monospace;
         }
 
@@ -23,17 +22,18 @@
             font-family: var(--font-type);
             color: var(--ink-color);
             padding: 40px 0;
-            line-height: 1.5;
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevents horizontal scroll only */
         }
 
         /* --- THE SHEET OF PAPER --- */
         .paper-sheet {
-            max-width: 850px; /* Standard A4 width feel */
+            max-width: 850px;
             min-height: 100vh;
             margin: 0 auto;
             background-color: var(--paper-color);
-            padding: 80px 60px; /* Deep margins like a printed page */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Lifted paper shadow */
+            padding: 80px 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
         }
 
@@ -60,14 +60,14 @@
             text-transform: uppercase;
         }
 
-        p { margin-bottom: 15px; text-align: justify; }
+        p { margin-bottom: 15px; text-align: left; }
 
-        /* --- TYPEWRITER ANIMATION (SCROLL TRIGGERED) --- */
+        /* --- TYPEWRITER ANIMATION --- */
         .typing-effect {
             display: inline-block;
             overflow: hidden;
             white-space: nowrap;
-            border-right: .15em solid var(--ink-color); /* The cursor */
+            border-right: .15em solid var(--ink-color);
             width: 0;
             opacity: 0;
         }
@@ -86,7 +86,7 @@
         .project-item {
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 1px dashed #ccc; /* Perforated line look */
+            border-bottom: 1px dashed #ccc;
             position: relative;
         }
 
@@ -110,18 +110,20 @@
             background: #f0f0f0;
             display: inline-block;
             padding: 5px 10px;
+            border: 1px solid #ddd;
         }
 
-        /* --- INTERACTIVE BUTTON (Look like stamped text) --- */
+        /* --- INTERACTIVE BUTTON --- */
         .interactive-btn {
             float: right;
             font-size: 0.8rem;
             background: var(--ink-color);
             color: white;
-            padding: 5px 10px;
+            padding: 6px 12px;
             text-decoration: none;
             cursor: pointer;
             border: 1px solid var(--ink-color);
+            transition: 0.2s;
         }
 
         .interactive-btn:hover {
@@ -129,10 +131,10 @@
             color: var(--ink-color);
         }
 
-        /* --- MODAL (For Images) --- */
+        /* --- MODAL (POPUP) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             z-index: 999;
             display: none;
             align-items: center;
@@ -141,35 +143,38 @@
 
         .modal-content {
             background: white;
-            padding: 20px;
+            padding: 30px;
             max-width: 900px;
             max-height: 90vh;
             overflow-y: auto;
             width: 95%;
-            border: 5px solid white;
+            border: 1px solid #ccc;
         }
 
         .image-gallery img {
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             border: 1px solid #333;
             box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
         }
 
         .close-btn {
-            background: red; color: white; border: none; padding: 10px 20px;
+            background: #cc0000; color: white; border: none; padding: 10px 20px;
             cursor: pointer; font-family: var(--font-type); font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 20px; border: 1px solid #990000;
         }
+        .close-btn:hover { background: #990000; }
 
         /* --- CONTACT --- */
         .contact-section a {
             color: var(--accent-blue);
             text-decoration: none;
-            margin-right: 20px;
+            margin-right: 25px;
             border-bottom: 1px solid var(--accent-blue);
+            font-weight: bold;
         }
-        
+        .contact-section a:hover { background-color: #f0f8ff; }
+
         @media(max-width: 700px) {
             .paper-sheet { padding: 40px 20px; }
             .interactive-btn { float: none; display: block; width: fit-content; margin-top: 10px; }
@@ -212,7 +217,7 @@
 
             <div class="project-item">
                 <div class="interactive-btn" onclick="openModal()">
-                    [ CLICK TO VIEW SCHEMATICS ]
+                    [ VIEW SCHEMATICS ]
                 </div>
 
                 <div class="project-title">Integrated Motor Controller PCB</div>
@@ -262,7 +267,7 @@
 
     <div id="galleryModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <button class="close-btn" onclick="document.getElementById('galleryModal').style.display='none'">CLOSE X</button>
+            <button class="close-btn" onclick="closeModalExplicit()">CLOSE X</button>
             
             <div class="image-gallery">
                 <h3 style="margin-bottom: 10px;">Figure 1: Full System Schematic</h3>
@@ -275,19 +280,33 @@
     </div>
 
     <script>
-        // MODAL LOGIC
+        const modal = document.getElementById('galleryModal');
+
+        // 1. OPEN FUNCTION (Locks Scroll)
         function openModal() {
-            document.getElementById('galleryModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Stop scrolling
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; 
         }
 
+        // 2. CLOSE FUNCTION (Unlocks Scroll Hard Reset)
+        function closeModalExplicit() {
+            modal.style.display = 'none';
+            document.body.style.overflow = ''; // Clears the inline style completely
+        }
+
+        // 3. BACKGROUND CLICK CLOSE
         function closeModal(event) {
-            // Close if clicked outside content
-            if (event.target.id === 'galleryModal') {
-                document.getElementById('galleryModal').style.display = 'none';
-                document.body.style.overflow = 'auto'; // Resume scrolling
+            if (event.target === modal) {
+                closeModalExplicit();
             }
         }
+
+        // 4. ESCAPE KEY CLOSE (Accessibility)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModalExplicit();
+            }
+        });
 
         // TYPEWRITER SCROLL OBSERVER
         const observer = new IntersectionObserver(entries => {
