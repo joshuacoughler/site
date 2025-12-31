@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joshua Coughler | Computer Engineering Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #ec4899; /* Changed to a 'McGill-ish' Red/Pink accent or keep Blue */
+            --accent-secondary: #6366f1;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section { padding: 80px 0; }
+
+        /* --- HEADER --- */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #334155;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--text-primary); }
+        .logo span { color: var(--accent-secondary); }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a:hover { color: var(--accent-secondary); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 70%);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(to right, var(--accent-secondary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem; 
+            color: var(--accent-secondary); 
+            margin-bottom: 40px; 
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-secondary);
+            color: #ffffff;
+            font-weight: bold;
+            border-radius: 5px;
+            border: 2px solid var(--accent-secondary);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--accent-secondary);
+        }
+
+        /* --- ABOUT SECTION --- */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-secondary);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .about-text p { margin-bottom: 20px; color: var(--text-secondary); }
+
+        /* --- SKILLS --- */
+        .skills-wrapper h3 { margin-bottom: 20px; color: var(--text-primary); }
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            background-color: var(--card-bg);
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            color: var(--accent-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* --- EXPERIENCE/PROJECTS --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover { 
+            transform: translateY(-5px); 
+            border-color: var(--accent-secondary); 
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .project-card h3 { font-size: 1.4rem; }
+        .project-role { font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block;}
+
+        .project-card ul {
+            list-style: disc;
+            margin-left: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .project-card ul li { margin-bottom: 8px; }
+
+        .project-tech { 
+            margin-top: auto;
+            font-size: 0.85rem; 
+            color: var(--accent-secondary); 
+            font-family: monospace; 
+            padding-top: 15px;
+            border-top: 1px solid #334155;
+        }
+
+        /* --- CONTACT --- */
+        .contact-box {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #334155;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .social-links a:hover { color: var(--accent-secondary); }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .about-content { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Joshua<span>.Coughler</span></a>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Engineering</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Hi, I'm <span>Joshua</span></h1>
+            <p>Computer Engineering Student @ McGill University</p>
+            <p class="hero-sub">Specializing in Embedded Systems, PCB Design & AI</p>
+            <a href="#projects" class="btn">View My Engineering Projects</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I am a <strong>Bachelor of Engineering</strong> student at McGill University (Class of 2028), majoring in Computer Engineering with a Minor in Artificial Intelligence. I currently hold a <strong>3.78 GPA</strong>.
+                    </p>
+                    <p>
+                        My work focuses on the intersection of hardware and software. From designing custom PCBs for Mars rovers to writing firmware for aerial telemetry, I love building systems where code interacts with the physical world.
+                    </p>
+                    <p>
+                        Beyond engineering, my time volunteering with <em>Youths For Hospice</em> has strengthened my commitment to designing technology that prioritizes accessibility and human needs.
+                    </p>
+                </div>
+                
+                <div class="skills-wrapper">
+                    <h3>Technical Toolkit</h3>
+                    <div class="skills-grid">
+                        <span class="skill-tag">Java & Python</span>
+                        <span class="skill-tag">C / Firmware</span>
+                        <span class="skill-tag">Altium Designer</span>
+                        <span class="skill-tag">STM32CubeIDE</span>
+                        <span class="skill-tag">VHDL & Quartus</span>
+                        <span class="skill-tag">PCB Design</span>
+                        <span class="skill-tag">KiCad</span>
+                        <span class="skill-tag">MATLAB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Engineering Projects</h2>
+            <div class="projects-grid">
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Integrated Motor Controller</h3>
+                        <i class="fas fa-robot" style="color: var(--text-secondary);"></i>
+                    </div>
+                    <span class="project-role">McGill Robotics Team | Electrical Division</span>
+                    <ul>
+                        <li>Consolidated four motor-control PCBs into a single 3-channel 24V controller (wrist pitch/roll/grip).</li>
+                        <li>Designed schematics for DFMA, standardizing connectors and isolating HV/LV domains.</li>
+                        <li>Developed STM32 firmware for multi-motor control with encoder feedback and safety interlocks.</li>
+                    </ul>
+                    <div class="project-tech">Altium Designer • STM32 • C • Hardware</div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Mission Planner Telemetry Plugin</h3>
+                        <i class="fas fa-plane" style="color: var(--text-secondary);"></i>
+                    </div>
+                    <span class="project-role">Aerial Design Team | Avionics Division</span>
+                    <ul>
+                        <li>Developed a plugin to translate raw telemetry (RSSI, packet loss) into clear status indicators.</li>
+                        <li>Implemented threshold-based warnings to notify operators of unsafe connection quality.</li>
+                        <li>Validated plugin accuracy using simulated flight data and MAVLink streams.</li>
+                    </ul>
+                    <div class="project-tech">Python • Mission Planner • MAVLink • VS Code</div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Custom Heap Data Structure</h3>
+                        <i class="fas fa-code" style="color: var(--text-secondary);"></i>
+                    </div>
+                    <span class="project-role">Academic Project | Computer Science</span>
+                    <ul>
+                        <li>Implemented a Priority Queue using a binary heap with 1-based indexing for arithmetic optimization.</li>
+                        <li>Engineered custom comparators to handle polymorphic data types efficiently.</li>
+                        <li>Rigorous testing of edge cases in memory management and sorting efficiency.</li>
+                    </ul>
+                    <div class="project-tech">Java • Data Structures • JUnit</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="contact-box">
+                <h2 style="margin-bottom: 20px;">Let's Connect</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                    I am based in Montréal and open to opportunities in Embedded Systems, Firmware Engineering, or Hardware Design.
+                </p>
+                <a href="mailto:joshua.coughler@mail.mcgill.ca" class="btn">joshua.coughler@mail.mcgill.ca</a>
+                
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/joshuacoughler" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/joshuacoughler" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 20px; border-top: 1px solid #334155; color: var(--text-secondary); background-color: var(--bg-color);">
+        <p>&copy; 2025 Joshua Coughler.</p>
+    </footer>
+
+</body>
+</html>
