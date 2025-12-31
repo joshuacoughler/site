@@ -8,40 +8,66 @@
     <style>
         /* --- PAPER THEME VARIABLES --- */
         :root {
-            --paper-bg: #fdfbf7;      /* Warm off-white paper color */
-            --ink-color: #1a1a1a;     /* Dark typing ink */
-            --accent-blue: #2563eb;   /* Blueprint blue for links/highlights */
-            --line-color: #e5e5e5;    /* Faint lines */
-            --font-type: 'Courier New', Courier, monospace; /* The Typewriter Font */
+            --desk-color: #2c2c2c;    /* Dark desk background */
+            --paper-color: #ffffff;   /* Bright white paper */
+            --ink-color: #111111;     /* Black typewriter ink */
+            --accent-blue: #0000EE;   /* Standard link blue (looks like pen ink) */
+            --highlight: #ffffcc;     /* Subtle highlighter yellow */
+            --font-type: 'Courier New', Courier, monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #e2e2e2; /* Desk background */
+            background-color: var(--desk-color);
             font-family: var(--font-type);
             color: var(--ink-color);
-            line-height: 1.6;
-            padding: 40px 20px;
+            padding: 40px 0;
+            line-height: 1.5;
         }
 
-        /* --- THE PAPER SHEET --- */
-        .page-container {
-            max-width: 850px;
+        /* --- THE SHEET OF PAPER --- */
+        .paper-sheet {
+            max-width: 850px; /* Standard A4 width feel */
+            min-height: 100vh;
             margin: 0 auto;
-            background-color: var(--paper-bg);
-            padding: 60px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Subtle shadow like paper sitting on a desk */
-            border: 1px solid #d1d1d1;
+            background-color: var(--paper-color);
+            padding: 80px 60px; /* Deep margins like a printed page */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Lifted paper shadow */
             position: relative;
         }
 
-        /* --- TYPEWRITER ANIMATION --- */
-        .typing-container {
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--ink-color);
+            padding-bottom: 10px;
+            margin-bottom: 5px;
+            letter-spacing: -1px;
+        }
+
+        .header-meta {
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            text-decoration: underline;
+            text-transform: uppercase;
+        }
+
+        p { margin-bottom: 15px; text-align: justify; }
+
+        /* --- TYPEWRITER ANIMATION (SCROLL TRIGGERED) --- */
+        .typing-effect {
             display: inline-block;
             overflow: hidden;
             white-space: nowrap;
-            border-right: 3px solid var(--accent-blue); /* The cursor */
+            border-right: .15em solid var(--ink-color); /* The cursor */
             width: 0;
             opacity: 0;
         }
@@ -49,203 +75,188 @@
         .typing-active {
             opacity: 1;
             animation: 
-                typing 2.5s steps(40, end) forwards,
+                typing 2s steps(40, end) forwards,
                 blink-caret .75s step-end infinite;
         }
 
         @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-blue); } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--ink-color); } }
 
-        /* --- TYPOGRAPHY --- */
-        h1 { font-size: 2.5rem; margin-bottom: 10px; letter-spacing: -1px; }
-        h2 { 
-            font-size: 1.5rem; 
-            margin-top: 60px; 
-            margin-bottom: 30px; 
-            border-bottom: 2px solid var(--ink-color); 
-            padding-bottom: 10px;
-            text-transform: uppercase;
-        }
-        h3 { font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; }
-        p { margin-bottom: 20px; font-size: 1rem; text-align: justify; }
-
-        /* --- SECTIONS --- */
-        .header-section { margin-bottom: 60px; text-align: left; }
-        .sub-header { color: #555; font-style: italic; margin-bottom: 20px; }
-
-        /* --- PROJECT BLOCKS (LINEAR) --- */
-        .project-block {
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 1px dashed var(--line-color);
+        /* --- PROJECT ITEMS --- */
+        .project-item {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #ccc; /* Perforated line look */
             position: relative;
         }
 
-        .project-meta {
-            font-size: 0.85rem;
-            color: var(--accent-blue);
+        .project-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .project-role {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #555;
             margin-bottom: 15px;
             display: block;
         }
 
-        .tech-list {
-            margin-top: 15px;
+        .tech-stack {
             font-size: 0.85rem;
-            border-top: 1px solid var(--line-color);
-            padding-top: 10px;
-        }
-        .tech-item { margin-right: 15px; font-weight: bold; }
-
-        /* --- INTERACTIVE BUTTON --- */
-        .interactive-btn {
+            margin-top: 15px;
+            background: #f0f0f0;
             display: inline-block;
-            margin-top: 10px;
-            padding: 8px 16px;
-            border: 1px solid var(--ink-color);
-            background: transparent;
-            color: var(--ink-color);
-            font-family: var(--font-type);
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-        }
-        .interactive-btn:hover {
-            background: var(--ink-color);
-            color: var(--paper-bg);
+            padding: 5px 10px;
         }
 
-        /* --- MODAL (POPUP SCHEMATIC) --- */
+        /* --- INTERACTIVE BUTTON (Look like stamped text) --- */
+        .interactive-btn {
+            float: right;
+            font-size: 0.8rem;
+            background: var(--ink-color);
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid var(--ink-color);
+        }
+
+        .interactive-btn:hover {
+            background: white;
+            color: var(--ink-color);
+        }
+
+        /* --- MODAL (For Images) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.95); /* White overlay like a new page */
-            z-index: 1000;
+            background: rgba(0,0,0,0.8);
+            z-index: 999;
             display: none;
-            overflow-y: auto;
-            padding: 40px;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-content {
+            background: white;
+            padding: 20px;
             max-width: 900px;
-            margin: 0 auto;
-            border: 2px solid var(--ink-color);
-            background: var(--paper-bg);
-            padding: 40px;
+            max-height: 90vh;
+            overflow-y: auto;
+            width: 95%;
+            border: 5px solid white;
         }
 
-        .modal-gallery {
-            display: flex; flex-direction: column; gap: 40px; margin-top: 40px;
-        }
-        .modal-gallery img {
+        .image-gallery img {
             width: 100%;
-            border: 1px solid #ccc;
-            padding: 5px;
-            background: white;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
         }
-        
+
         .close-btn {
-            float: right;
-            font-size: 1.5rem;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-family: var(--font-type);
+            background: red; color: white; border: none; padding: 10px 20px;
+            cursor: pointer; font-family: var(--font-type); font-weight: bold;
+            margin-bottom: 20px;
         }
 
         /* --- CONTACT --- */
-        .contact-links { margin-top: 20px; font-size: 1.2rem; }
-        .contact-links a { margin-right: 20px; color: var(--ink-color); text-decoration: none; border-bottom: 1px solid transparent; }
-        .contact-links a:hover { border-bottom: 1px solid var(--accent-blue); color: var(--accent-blue); }
-
-        @media (max-width: 600px) {
-            .page-container { padding: 30px 20px; }
-            h1 { font-size: 1.8rem; }
+        .contact-section a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            margin-right: 20px;
+            border-bottom: 1px solid var(--accent-blue);
+        }
+        
+        @media(max-width: 700px) {
+            .paper-sheet { padding: 40px 20px; }
+            .interactive-btn { float: none; display: block; width: fit-content; margin-top: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="page-container">
+    <div class="paper-sheet">
         
-        <header class="header-section">
+        <header>
             <h1>Joshua Coughler</h1>
-            <div class="sub-header">McGill University // Bachelor of Engineering (CompEng & AI)</div>
-            <div style="margin-top: 30px;">
-                Subject: <span class="typing-container scroll-trigger">Exploring Hardware & Software Intersection</span>
+            <div class="header-meta">
+                McGill University<br>
+                Bachelor of Engineering (Computer Eng. & AI)<br>
+                Class of 2028
+            </div>
+            
+            <div style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 10px 0; margin: 30px 0;">
+                <strong>OBJECTIVE:</strong> 
+                <span class="typing-effect scroll-target">Exploring the Intersection of Hardware & Software</span>
             </div>
         </header>
 
-        <section id="projects">
-            <h2>01 // Engineering Projects</h2>
+        <section>
+            <h2>PROJECT HISTORY</h2>
 
-            <div class="project-block">
-                <h3>Integrated Motor Controller PCB</h3>
-                <span class="project-meta">McGill Robotics Team • 2025/2026</span>
+            <div class="project-item">
+                <div class="interactive-btn" onclick="openModal()">
+                    [ CLICK TO VIEW SCHEMATICS ]
+                </div>
+
+                <div class="project-title">Integrated Motor Controller PCB</div>
+                <span class="project-role">McGill Robotics Team | Electrical Division</span>
                 
                 <p>
-                    <strong>Objective:</strong> Consolidate four discrete motor-control PCBs into a single 3-channel 24V controller (Pitch, Roll, Grip) to optimize space and improve reliability for the Mars Rover arm.
+                    Replaced three individual steering boards with a single consolidated PCB to control 3 independent motors (Pitch, Roll, Grip). 
                 </p>
                 <p>
-                    <strong>Implementation:</strong> Designed a unified system utilizing an STM32G474RET3 MCU. The architecture features a 24V input stepped down via a Buck Converter (AOZ1280CI) and LDOs. Crucially, I implemented a USB backup power circuit to allow logic-level debugging without main battery power.
+                    The design utilizes an STM32G474RET3 microcontroller interfacing via CAN bus. Key features include a 24V-to-5V Buck Converter, LDO regulation, and a critical USB-backup circuit that allows logic-level debugging even when the main 24V battery is disconnected.
                 </p>
 
-                <button class="interactive-btn" onclick="openModal()">
-                    [ VIEW SCHEMATIC & PCB RENDER ]
-                </button>
-
-                <div class="tech-list">
-                    <span class="tech-item">Altium Designer</span>
-                    <span class="tech-item">STM32CubeIDE</span>
-                    <span class="tech-item">C / Firmware</span>
+                <div class="tech-stack">
+                    TOOLS: Altium Designer • STM32CubeIDE
                 </div>
             </div>
 
-            <div class="project-block">
-                <h3>Telemetry Status Plugin</h3>
-                <span class="project-meta">Aerial Design Team • Avionics</span>
+            <div class="project-item">
+                <div class="project-title">Telemetry Status Plugin</div>
+                <span class="project-role">Aerial Design Team | Avionics Division</span>
                 
                 <p>
-                    <strong>Objective:</strong> Create a safety-critical monitoring tool for non-avionics flight operators.
+                    Developed a real-time Mission Planner plugin to parse MAVLink telemetry packets.
                 </p>
                 <p>
-                    <strong>Implementation:</strong> Developed a custom Mission Planner plugin that parses raw MAVLink packets. The software monitors RSSI, packet loss, and latency in real-time, displaying visual warnings when connection quality degrades below safety thresholds.
+                    The system translates raw data (RSSI, packet loss, latency) into threshold-based visual warnings, ensuring flight operators can instantly assess link health without interpreting raw data streams.
                 </p>
 
-                <div class="tech-list">
-                    <span class="tech-item">Visual Studio Code</span>
-                    <span class="tech-item">Mission Planner</span>
-                    <span class="tech-item">Python</span>
+                <div class="tech-stack">
+                    TOOLS: Visual Studio Code • Mission Planner
                 </div>
             </div>
+
         </section>
 
-        <section id="contact">
-            <h2>02 // Contact Information</h2>
-            <p>Currently open to internship opportunities in Embedded Systems and Hardware Design.</p>
-            
-            <div class="contact-links">
-                <a href="mailto:joshua.coughler@mail.mcgill.ca"><i class="fas fa-envelope"></i> Email</a>
-                <a href="https://linkedin.com/in/joshuacoughler"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                <a href="https://github.com/joshuacoughler"><i class="fab fa-github"></i> GitHub</a>
+        <section class="contact-section">
+            <h2>CONTACT</h2>
+            <p>Open for Internships in Firmware & Hardware Design.</p>
+            <div style="margin-top: 20px;">
+                <a href="mailto:joshua.coughler@mail.mcgill.ca">Email</a>
+                <a href="https://linkedin.com/in/joshuacoughler">LinkedIn</a>
+                <a href="https://github.com/joshuacoughler">GitHub</a>
             </div>
         </section>
 
     </div>
 
-    <div id="imageModal" class="modal-overlay" onclick="closeModal(event)">
+    <div id="galleryModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
-            <button class="close-btn" onclick="document.getElementById('imageModal').style.display='none'">[X] CLOSE</button>
-            <h2 style="margin-top: 0; border: none;">Appendix A: Motor Controller</h2>
+            <button class="close-btn" onclick="document.getElementById('galleryModal').style.display='none'">CLOSE X</button>
             
-            <div class="modal-gallery">
-                <div>
-                    <img src="schematic.jpg" alt="Schematic Diagram - Ensure file is named schematic.jpg">
-                    <div style="text-align: center; font-size: 0.9rem; margin-top: 10px; color: #555;">Figure 1: System Schematic (Altium Designer)</div>
-                </div>
-                <div>
-                    <img src="pcb.jpg" alt="PCB Layout - Ensure file is named pcb.jpg">
-                    <div style="text-align: center; font-size: 0.9rem; margin-top: 10px; color: #555;">Figure 2: Routed PCB 3D View (Altium Designer)</div>
-                </div>
+            <div class="image-gallery">
+                <h3 style="margin-bottom: 10px;">Figure 1: Full System Schematic</h3>
+                <img src="schematic.jpg" alt="Schematic Diagram">
+                
+                <h3 style="margin-bottom: 10px;">Figure 2: Routed PCB Layout</h3>
+                <img src="pcb.jpg" alt="PCB Layout">
             </div>
         </div>
     </div>
@@ -253,18 +264,19 @@
     <script>
         // MODAL LOGIC
         function openModal() {
-            document.getElementById('imageModal').style.display = 'block';
-            document.body.style.overflow = 'hidden'; 
+            document.getElementById('galleryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Stop scrolling
         }
 
         function closeModal(event) {
-            if (event.target.id === 'imageModal') {
-                document.getElementById('imageModal').style.display = 'none';
-                document.body.style.overflow = 'auto'; 
+            // Close if clicked outside content
+            if (event.target.id === 'galleryModal') {
+                document.getElementById('galleryModal').style.display = 'none';
+                document.body.style.overflow = 'auto'; // Resume scrolling
             }
         }
 
-        // TYPEWRITER SCROLL LOGIC
+        // TYPEWRITER SCROLL OBSERVER
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -273,7 +285,7 @@
             });
         }, { threshold: 1.0 });
 
-        document.querySelectorAll('.scroll-trigger').forEach(el => observer.observe(el));
+        document.querySelectorAll('.scroll-target').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
