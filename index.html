@@ -23,7 +23,7 @@
             color: var(--ink-color);
             padding: 40px 0;
             line-height: 1.6;
-            overflow-x: hidden; /* Prevents horizontal scroll only */
+            overflow-x: hidden;
         }
 
         /* --- THE SHEET OF PAPER --- */
@@ -82,7 +82,7 @@
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--ink-color); } }
 
-        /* --- PROJECT ITEMS --- */
+        /* --- PROJECT / EXPERIENCE ITEMS --- */
         .project-item {
             margin-bottom: 40px;
             padding-bottom: 20px;
@@ -111,6 +111,19 @@
             display: inline-block;
             padding: 5px 10px;
             border: 1px solid #ddd;
+        }
+
+        /* --- SKILLS GRID --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 40px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .skills-grid div span {
+            font-weight: bold;
         }
 
         /* --- INTERACTIVE BUTTON --- */
@@ -178,6 +191,7 @@
         @media(max-width: 700px) {
             .paper-sheet { padding: 40px 20px; }
             .interactive-btn { float: none; display: block; width: fit-content; margin-top: 10px; }
+            .skills-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -188,9 +202,9 @@
         <header>
             <h1>Joshua Coughler</h1>
             <div class="header-meta">
-                McGill University<br>
-                Bachelor of Engineering (Computer Eng. & AI)<br>
-                Class of 2028 | GPA: 3.78/4.00
+                McGill University &bull; Montr&eacute;al, QC<br>
+                Bachelor of Engineering (Computer Engineering) | Minor: Applied AI<br>
+                Class of 2028 | GPA: 3.81/4.00
             </div>
             
             <div style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 10px 0; margin: 30px 0;">
@@ -202,10 +216,10 @@
         <section>
             <h2>ABOUT ME</h2>
             <p>
-                I am a Computer Engineering student at McGill University with a Minor in Artificial Intelligence. My academic focus spans from low-level circuit analysis to high-level algorithm design, allowing me to understand not just how code runs, but the physics of the hardware it runs on.
+                I am a Computer Engineering student at McGill University with a Minor in Applied AI. My academic focus spans from low-level circuit analysis to high-level algorithm design, allowing me to understand not just how code runs, but the physics of the hardware it runs on. Relevant coursework includes Circuits I &amp; II, Digital Logic, Signals &amp; Systems, Discrete Structures, Software Development, and Linear Algebra.
             </p>
             <p>
-                Outside of engineering, I am a member of <strong>Youths For Hospice</strong>, where I support patients and families through outreach visits. This experience has deeply influenced my engineering philosophy: technology should be designed with accessibility and human needs as the priority.
+                Outside of engineering, I am a member of <strong>Youths For Hospice</strong>, where I support patients and families through outreach visits and educational resources. This experience has deeply influenced my engineering philosophy: technology should be designed with accessibility and human needs as the priority.
             </p>
             <p>
                 I am fluent in English, French, and Spanish.
@@ -213,7 +227,7 @@
         </section>
 
         <section>
-            <h2>PROJECT HISTORY</h2>
+            <h2>EXPERIENCE</h2>
 
             <div class="project-item">
                 <div class="interactive-btn" onclick="openModal()">
@@ -221,45 +235,103 @@
                 </div>
 
                 <div class="project-title">Integrated Motor Controller PCB</div>
-                <span class="project-role">McGill Robotics Team | Electrical Division</span>
-                
+                <span class="project-role">McGill Robotics Team &mdash; Rover Electrical Division &nbsp;|&nbsp; Sept. 2025 &ndash; Present</span>
+
                 <p>
-                    Replaced three individual steering boards with a single consolidated PCB to control 3 independent motors (Pitch, Roll, Grip). 
+                    Consolidated four motor-control PCBs into a single 3-channel 24V controller in Altium, reducing board count by 75% and cutting wiring and assembly effort while maintaining full encoder and safety interlock functionality.
                 </p>
                 <p>
-                    The design utilizes an STM32G474RET3 microcontroller interfacing via CAN bus. Key features include a 24V-to-5V Buck Converter, LDO regulation, and a critical USB-backup circuit that allows logic-level debugging even when the main 24V battery is disconnected.
+                    Designed schematics for easier building and servicing (DFMA) by standardizing connectors and pinouts and clearly separating HV/LV domains with isolation. Developed and validated firmware in STM32CubeIDE for multi-motor control, encoder feedback, and limit-switch interlocks to ensure safe, repeatable arm operation. Assembled and validated the board under full load to verify power delivery and current handling.
                 </p>
 
                 <div class="tech-stack">
-                    TOOLS: Altium Designer • STM32CubeIDE
+                    TOOLS: Altium Designer &bull; STM32CubeIDE
                 </div>
             </div>
 
             <div class="project-item">
                 <div class="project-title">Telemetry Status Plugin</div>
-                <span class="project-role">Aerial Design Team | Avionics Division</span>
+                <span class="project-role">McGill Aerial Design Team &mdash; Avionics Division &nbsp;|&nbsp; Sept. 2025 &ndash; Present</span>
                 
                 <p>
-                    Developed a real-time Mission Planner plugin to parse MAVLink telemetry packets.
+                    Developed a real-time Mission Planner plugin to parse MAVLink telemetry packets and translate raw link data (RSSI, packet loss, latency) into clear connection status indicators for non-avionics team members.
                 </p>
                 <p>
-                    The system translates raw data (RSSI, packet loss, latency) into threshold-based visual warnings, ensuring flight operators can instantly assess link health without interpreting raw data streams.
+                    Implemented threshold-based warnings to detect unsafe link conditions and trigger operator alerts within one second. Tested and validated the plugin with simulated flight data to verify accurate telemetry capture, alert triggering, and reliable logging behavior.
                 </p>
 
                 <div class="tech-stack">
-                    TOOLS: Visual Studio Code • Mission Planner
+                    TOOLS: Visual Studio Code &bull; Mission Planner
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="project-title">Mathematics Tutor</div>
+                <span class="project-role">Tutorax &mdash; Kingston, Canada &nbsp;|&nbsp; June 2025 &ndash; December 2025</span>
+
+                <p>
+                    Provided one-on-one mathematics tutoring to high school students, adjusting explanations to individual learning needs and developing personalized lesson plans to improve student performance.
+                </p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>PROJECT HISTORY</h2>
+
+            <div class="project-item">
+                <div class="project-title">Clothing Store Information System Database</div>
+                <span class="project-role">Personal Project</span>
+
+                <p>
+                    Built a relational SQL database in MySQL Workbench to manage core clothing store information end-to-end. Designed table structures and relationships spanning inventory, customers, suppliers, orders, and sales to support the full operational lifecycle of a retail business.
+                </p>
+                <p>
+                    Structured linked tables with key constraints and developed targeted queries to ensure accurate, consistent, and well-organized records across all domains.
+                </p>
+
+                <div class="tech-stack">
+                    TOOLS: MySQL Workbench &bull; SQL
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="project-title">Minesweeper Generator &amp; Auto-Solver</div>
+                <span class="project-role">Personal Project</span>
+
+                <p>
+                    Built a Python CLI implementation of Minesweeper with a configurable n&times;n board size and mine count, rendered directly in the terminal with flag and mine symbols for a clean gameplay experience.
+                </p>
+                <p>
+                    Wrote a rule-based auto-solver that analyzes the board state and infers safe cells and mine locations from adjacent number constraints, enabling the game to be played fully autonomously.
+                </p>
+
+                <div class="tech-stack">
+                    TOOLS: Python &bull; Terminal
                 </div>
             </div>
 
         </section>
 
+        <section>
+            <h2>SKILLS &amp; TECHNOLOGIES</h2>
+            <div class="skills-grid">
+                <div><span>Programming:</span> Python, SQL, HTML, Java, C, Bash</div>
+                <div><span>Tools:</span> Git, VS Code, IntelliJ IDEA</div>
+                <div><span>Hardware:</span> Altium Designer, STM32CubeIDE</div>
+                <div><span>Other:</span> MS Office, Excel, Overleaf</div>
+                <div><span>Spoken Languages:</span> English, French, Spanish</div>
+            </div>
+        </section>
+
         <section class="contact-section">
             <h2>CONTACT</h2>
-            <p>Open for Internships in Firmware & Hardware Design.</p>
+            <p>Open for Internships in Firmware, Hardware &amp; Software Design.</p>
             <div style="margin-top: 20px;">
                 <a href="mailto:joshua.coughler@mail.mcgill.ca">Email</a>
                 <a href="https://linkedin.com/in/joshuacoughler">LinkedIn</a>
                 <a href="https://github.com/joshuacoughler">GitHub</a>
+                <a href="https://joshuacoughler.github.io/site/">Portfolio</a>
             </div>
         </section>
 
@@ -282,33 +354,28 @@
     <script>
         const modal = document.getElementById('galleryModal');
 
-        // 1. OPEN FUNCTION (Locks Scroll)
         function openModal() {
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden'; 
         }
 
-        // 2. CLOSE FUNCTION (Unlocks Scroll Hard Reset)
         function closeModalExplicit() {
             modal.style.display = 'none';
-            document.body.style.overflow = ''; // Clears the inline style completely
+            document.body.style.overflow = '';
         }
 
-        // 3. BACKGROUND CLICK CLOSE
         function closeModal(event) {
             if (event.target === modal) {
                 closeModalExplicit();
             }
         }
 
-        // 4. ESCAPE KEY CLOSE (Accessibility)
         document.addEventListener('keydown', function(event) {
             if (event.key === "Escape") {
                 closeModalExplicit();
             }
         });
 
-        // TYPEWRITER SCROLL OBSERVER
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
